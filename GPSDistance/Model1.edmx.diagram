@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e30542c51ee640f88c23e1bfd7b49d46" Name="Diagram1">
+        <EntityTypeShape EntityType="MetroModel.線路" Width="1.5" PointX="0.75" PointY="0.625" />
+        <EntityTypeShape EntityType="MetroModel.LineEdge" Width="1.5" PointX="4.75" PointY="0.625" />
+        <EntityTypeShape EntityType="MetroModel.Dijkstra" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MetroModel.Trip" Width="1.5" PointX="6.5" PointY="3.75" />
+        <EntityTypeShape EntityType="MetroModel.TripNode" Width="1.5" PointX="8.125" PointY="3.75" />
+        <EntityTypeShape EntityType="MetroModel.車站" Width="1.5" PointX="2.5" PointY="0.625" />
+        <EntityTypeShape EntityType="MetroModel.轉乘" Width="1.5" PointX="6.625" PointY="0.625" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

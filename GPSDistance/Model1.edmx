@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MetroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dijkstra">
+          <Key>
+            <PropertyRef Name="Dijkstra編號" />
+          </Key>
+          <Property Name="Dijkstra編號" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="起站編號" Type="bigint" Nullable="false" />
+          <Property Name="迄站編號" Type="bigint" Nullable="false" />
+          <Property Name="最短距離" Type="decimal" Precision="15" Scale="3" />
+          <Property Name="最短時間" Type="int" />
+          <Property Name="最少票價" Type="int" />
+        </EntityType>
+        <EntityType Name="LineEdge">
+          <Key>
+            <PropertyRef Name="Edge編號" />
+          </Key>
+          <Property Name="Edge編號" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="起站編號" Type="bigint" Nullable="false" />
+          <Property Name="迄站編號" Type="bigint" Nullable="false" />
+          <Property Name="距離" Type="decimal" Precision="15" Scale="3" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="Trip編號" />
+          </Key>
+          <Property Name="Trip編號" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="起站編號" Type="bigint" Nullable="false" />
+          <Property Name="迄站編號" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TripNode">
+          <Key>
+            <PropertyRef Name="TripNode編號" />
+          </Key>
+          <Property Name="TripNode編號" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Trip編號" Type="bigint" Nullable="false" />
+          <Property Name="序號" Type="int" Nullable="false" />
+          <Property Name="車站編號" Type="bigint" Nullable="false" />
+          <Property Name="是否轉乘" Type="bit" />
+        </EntityType>
+        <EntityType Name="車站">
+          <Key>
+            <PropertyRef Name="車站編號" />
+          </Key>
+          <Property Name="車站編號" Type="bigint" Nullable="false" />
+          <Property Name="線路編號" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="線路序號" Type="int" Nullable="false" />
+          <Property Name="中文名稱" Type="nvarchar" MaxLength="50" />
+          <Property Name="俄文名稱" Type="nvarchar" MaxLength="50" />
+          <Property Name="英文名稱" Type="nvarchar" MaxLength="50" />
+          <Property Name="啟用日期" Type="date" />
+          <Property Name="高度" Type="decimal" Precision="15" Scale="3" />
+          <Property Name="建築類型" Type="nvarchar(max)" />
+          <Property Name="經度" Type="decimal" Precision="15" Scale="3" />
+          <Property Name="緯度" Type="decimal" Precision="15" Scale="3" />
+          <Property Name="圖片" Type="image" />
+        </EntityType>
+        <EntityType Name="線路">
+          <Key>
+            <PropertyRef Name="線路編號" />
+          </Key>
+          <Property Name="線路編號" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="中文名稱" Type="nvarchar" MaxLength="50" />
+          <Property Name="俄文名稱" Type="nvarchar" MaxLength="50" />
+          <Property Name="英文名稱" Type="nvarchar" MaxLength="50" />
+          <Property Name="開通年份" Type="int" />
+          <Property Name="擴建年份" Type="int" />
+          <Property Name="全長" Type="decimal" Precision="15" Scale="3" />
+          <Property Name="站數" Type="int" />
+          <Property Name="平均長度" Type="decimal" Precision="15" Scale="3" />
+          <Property Name="標誌" Type="image" />
+        </EntityType>
+        <EntityType Name="轉乘">
+          <Key>
+            <PropertyRef Name="轉乘編號" />
+          </Key>
+          <Property Name="轉乘編號" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="起站編號" Type="bigint" Nullable="false" />
+          <Property Name="迄站編號" Type="bigint" Nullable="false" />
+          <Property Name="轉乘類型" Type="int" />
+          <Property Name="時間" Type="int" />
+        </EntityType>
+        <EntityContainer Name="MetroModelStoreContainer">
+          <EntitySet Name="Dijkstra" EntityType="Self.Dijkstra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LineEdge" EntityType="Self.LineEdge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trip" EntityType="Self.Trip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TripNode" EntityType="Self.TripNode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="車站" EntityType="Self.車站" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="線路" EntityType="Self.線路" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="轉乘" EntityType="Self.轉乘" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MetroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MetroEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="線路" EntityType="MetroModel.線路" />
+          <EntitySet Name="LineEdge" EntityType="MetroModel.LineEdge" />
+          <EntitySet Name="Dijkstra" EntityType="MetroModel.Dijkstra" />
+          <EntitySet Name="Trip" EntityType="MetroModel.Trip" />
+          <EntitySet Name="TripNode" EntityType="MetroModel.TripNode" />
+          <EntitySet Name="車站" EntityType="MetroModel.車站" />
+          <EntitySet Name="轉乘" EntityType="MetroModel.轉乘" />
+        </EntityContainer>
+        <EntityType Name="線路">
+          <Key>
+            <PropertyRef Name="線路編號" />
+          </Key>
+          <Property Name="線路編號" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="中文名稱" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="俄文名稱" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="英文名稱" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="開通年份" Type="Int32" />
+          <Property Name="擴建年份" Type="Int32" />
+          <Property Name="全長" Type="Decimal" Precision="15" Scale="3" />
+          <Property Name="站數" Type="Int32" />
+          <Property Name="平均長度" Type="Decimal" Precision="15" Scale="3" />
+          <Property Name="標誌" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="LineEdge">
+          <Key>
+            <PropertyRef Name="Edge編號" />
+          </Key>
+          <Property Name="Edge編號" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="起站編號" Type="Int64" Nullable="false" />
+          <Property Name="迄站編號" Type="Int64" Nullable="false" />
+          <Property Name="距離" Type="Decimal" Precision="15" Scale="3" />
+        </EntityType>
+        <EntityType Name="Dijkstra">
+          <Key>
+            <PropertyRef Name="Dijkstra編號" />
+          </Key>
+          <Property Name="Dijkstra編號" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="起站編號" Type="Int64" Nullable="false" />
+          <Property Name="迄站編號" Type="Int64" Nullable="false" />
+          <Property Name="最短距離" Type="Decimal" Precision="15" Scale="3" />
+          <Property Name="最短時間" Type="Int32" />
+          <Property Name="最少票價" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="Trip編號" />
+          </Key>
+          <Property Name="Trip編號" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="起站編號" Type="Int64" Nullable="false" />
+          <Property Name="迄站編號" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TripNode">
+          <Key>
+            <PropertyRef Name="TripNode編號" />
+          </Key>
+          <Property Name="TripNode編號" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Trip編號" Type="Int64" Nullable="false" />
+          <Property Name="序號" Type="Int32" Nullable="false" />
+          <Property Name="車站編號" Type="Int64" Nullable="false" />
+          <Property Name="是否轉乘" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="車站">
+          <Key>
+            <PropertyRef Name="車站編號" />
+          </Key>
+          <Property Name="車站編號" Type="Int64" Nullable="false" />
+          <Property Name="線路編號" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="線路序號" Type="Int32" Nullable="false" />
+          <Property Name="中文名稱" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="俄文名稱" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="英文名稱" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="啟用日期" Type="DateTime" Precision="0" />
+          <Property Name="高度" Type="Decimal" Precision="15" Scale="3" />
+          <Property Name="建築類型" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="經度" Type="Decimal" Precision="15" Scale="3" />
+          <Property Name="緯度" Type="Decimal" Precision="15" Scale="3" />
+          <Property Name="圖片" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="轉乘">
+          <Key>
+            <PropertyRef Name="轉乘編號" />
+          </Key>
+          <Property Name="轉乘編號" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="起站編號" Type="Int64" Nullable="false" />
+          <Property Name="迄站編號" Type="Int64" Nullable="false" />
+          <Property Name="轉乘類型" Type="Int32" />
+          <Property Name="時間" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MetroModelStoreContainer" CdmEntityContainer="MetroEntities">
+          <EntitySetMapping Name="線路">
+            <EntityTypeMapping TypeName="MetroModel.線路">
+              <MappingFragment StoreEntitySet="線路">
+                <ScalarProperty Name="標誌" ColumnName="標誌" />
+                <ScalarProperty Name="平均長度" ColumnName="平均長度" />
+                <ScalarProperty Name="站數" ColumnName="站數" />
+                <ScalarProperty Name="全長" ColumnName="全長" />
+                <ScalarProperty Name="擴建年份" ColumnName="擴建年份" />
+                <ScalarProperty Name="開通年份" ColumnName="開通年份" />
+                <ScalarProperty Name="英文名稱" ColumnName="英文名稱" />
+                <ScalarProperty Name="俄文名稱" ColumnName="俄文名稱" />
+                <ScalarProperty Name="中文名稱" ColumnName="中文名稱" />
+                <ScalarProperty Name="線路編號" ColumnName="線路編號" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LineEdge">
+            <EntityTypeMapping TypeName="MetroModel.LineEdge">
+              <MappingFragment StoreEntitySet="LineEdge">
+                <ScalarProperty Name="距離" ColumnName="距離" />
+                <ScalarProperty Name="迄站編號" ColumnName="迄站編號" />
+                <ScalarProperty Name="起站編號" ColumnName="起站編號" />
+                <ScalarProperty Name="Edge編號" ColumnName="Edge編號" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dijkstra">
+            <EntityTypeMapping TypeName="MetroModel.Dijkstra">
+              <MappingFragment StoreEntitySet="Dijkstra">
+                <ScalarProperty Name="最少票價" ColumnName="最少票價" />
+                <ScalarProperty Name="最短時間" ColumnName="最短時間" />
+                <ScalarProperty Name="最短距離" ColumnName="最短距離" />
+                <ScalarProperty Name="迄站編號" ColumnName="迄站編號" />
+                <ScalarProperty Name="起站編號" ColumnName="起站編號" />
+                <ScalarProperty Name="Dijkstra編號" ColumnName="Dijkstra編號" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trip">
+            <EntityTypeMapping TypeName="MetroModel.Trip">
+              <MappingFragment StoreEntitySet="Trip">
+                <ScalarProperty Name="迄站編號" ColumnName="迄站編號" />
+                <ScalarProperty Name="起站編號" ColumnName="起站編號" />
+                <ScalarProperty Name="Trip編號" ColumnName="Trip編號" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripNode">
+            <EntityTypeMapping TypeName="MetroModel.TripNode">
+              <MappingFragment StoreEntitySet="TripNode">
+                <ScalarProperty Name="是否轉乘" ColumnName="是否轉乘" />
+                <ScalarProperty Name="車站編號" ColumnName="車站編號" />
+                <ScalarProperty Name="序號" ColumnName="序號" />
+                <ScalarProperty Name="Trip編號" ColumnName="Trip編號" />
+                <ScalarProperty Name="TripNode編號" ColumnName="TripNode編號" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="車站">
+            <EntityTypeMapping TypeName="MetroModel.車站">
+              <MappingFragment StoreEntitySet="車站">
+                <ScalarProperty Name="圖片" ColumnName="圖片" />
+                <ScalarProperty Name="緯度" ColumnName="緯度" />
+                <ScalarProperty Name="經度" ColumnName="經度" />
+                <ScalarProperty Name="建築類型" ColumnName="建築類型" />
+                <ScalarProperty Name="高度" ColumnName="高度" />
+                <ScalarProperty Name="啟用日期" ColumnName="啟用日期" />
+                <ScalarProperty Name="英文名稱" ColumnName="英文名稱" />
+                <ScalarProperty Name="俄文名稱" ColumnName="俄文名稱" />
+                <ScalarProperty Name="中文名稱" ColumnName="中文名稱" />
+                <ScalarProperty Name="線路序號" ColumnName="線路序號" />
+                <ScalarProperty Name="線路編號" ColumnName="線路編號" />
+                <ScalarProperty Name="車站編號" ColumnName="車站編號" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="轉乘">
+            <EntityTypeMapping TypeName="MetroModel.轉乘">
+              <MappingFragment StoreEntitySet="轉乘">
+                <ScalarProperty Name="時間" ColumnName="時間" />
+                <ScalarProperty Name="轉乘類型" ColumnName="轉乘類型" />
+                <ScalarProperty Name="迄站編號" ColumnName="迄站編號" />
+                <ScalarProperty Name="起站編號" ColumnName="起站編號" />
+                <ScalarProperty Name="轉乘編號" ColumnName="轉乘編號" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
